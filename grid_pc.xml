@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<table>
+
+	<metadata>
+		<column name='id' label='ID' datatype='string' editable='true'></column>
+		<column name='PC1' label='PC1' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC2' label='PC2' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC3' label='PC3' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC4' label='PC4' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC5' label='PC5' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC6' label='PC6' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC7' label='PC7' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC8' label='PC8' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC9' label='PC9' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='PC10' label='PC10' datatype='double(%,4)' bar='false' editable='true'></column>
+
+	</metadata>
+	
+
+	<data>
+
+	</data>
+</table>

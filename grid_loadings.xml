@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<table>
+
+	<metadata>
+		<column name='id' label='ID' datatype='string' editable='false'></column>
+		<column name='1Y' label='1Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='2Y' label='2Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='3Y' label='3Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='4Y' label='4Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='5Y' label='5Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='7Y' label='7Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='10Y' label='10Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='15Y' label='15Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='20Y' label='20Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='25Y' label='25Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='30Y' label='30Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='40Y' label='40Y' datatype='double(%,4)' bar='false' editable='true'></column>
+		<column name='50Y' label='50Y' datatype='double(%,4)' bar='false' editable='true'></column>
+	</metadata>
+	<data>
+
+	</data>
+</table>
