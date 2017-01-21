@@ -1,5 +1,5 @@
 function import_data(fil){
-        
+
         var callb=function(results,file){
                 if(results.data[0][0]!='ID') return null;
                 
@@ -15,7 +15,7 @@ function import_data(fil){
                 data=[];
                 while (results.data.length>0) data.push({values: results.data.shift()})
                 eg_data.load({data: data,metadata:metadata});
-                eg_data.renderGrid("tablecontent_data", "grid");
+                eg_data.renderGrid("tablecontent_data", "table table-hover");
         }
 
         var pp_config={
@@ -42,7 +42,8 @@ function import_file(){
         fs.click();
 }
 
-function load_random(){
+function load_random(num_rows){
+
         //metadata
         var i,j,tmp,cmp,tmp_old;
         var metadata=[ {name:'id', label:'ID', datatype:'string', editable:'false'} ];
@@ -60,7 +61,7 @@ function load_random(){
         var noise=[];
         var data=[];
         tmp_old=[0,0,0,0,0,0,0,0,0,0];
-        for (i=0;i<501;i++){
+        for (i=0;i<num_rows;i++){
                 for (j=0;j<10;j++) noise.push((Math.random()-0.5)*0.1);
                 cmp=numeric.mul((Math.random()-0.5)*0.4,first_comp);
                 tmp=numeric.add(tmp_old,cmp);
@@ -74,12 +75,12 @@ function load_random(){
         }       
         
         eg_data.load({data: data,metadata:metadata});
-        eg_data.renderGrid("tablecontent_data", "grid");
+        eg_data.renderGrid("tablecontent_data", "table table-hover");
 }
 
 
 function calculate() {
-        $( "#tabs" ).tabs( {active: 1} );
+
         var idata=get_input_data();
         var results=perform_pca(idata);
         display_results(results);
@@ -121,7 +122,7 @@ function display_results(val){
                 data.push({values: tmp});
         }
         eg_pc.load({data: data});
-        eg_pc.renderGrid("tablecontent_pc", "grid");
+        eg_pc.renderGrid("tablecontent_pc", "table table-hover");
         
         //loadings
         metadata=[ {name:'expl', label:'Expl. Power', datatype:'double(%,2)', editable:'false'} ];
@@ -137,7 +138,7 @@ function display_results(val){
                 data.push({values: tmp});
         } 
         eg_loadings.load({data: data,metadata:metadata});
-        eg_loadings.renderGrid("tablecontent_loadings", "grid");
+        eg_loadings.renderGrid("tablecontent_loadings", "table table-hover");
 
 
         update_chart(val);

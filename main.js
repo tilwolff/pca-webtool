@@ -13,7 +13,7 @@ function loadXML()
 		tableLoaded: function() {
 
 			// render the grid
-			this.renderGrid("tablecontent_pc", "grid"); 
+			this.renderGrid("tablecontent_pc", "table table-hover"); 
 		},
 		
 		// called when some value has been modified: we try to paste multiple values
@@ -29,7 +29,7 @@ function loadXML()
 		tableLoaded: function() {
 
 			// render the grid
-			this.renderGrid("tablecontent_loadings", "grid"); 
+			this.renderGrid("tablecontent_loadings", "table table-hover"); 
 		},
 		
 		// called when some value has been modified: we try to paste multiple values
@@ -46,7 +46,9 @@ function loadXML()
 		tableLoaded: function() { 
 		
 			// render the grid
-			this.renderGrid("tablecontent_data", "grid"); 
+			this.renderGrid("tablecontent_data", "table table-hover"); 
+		        load_random(50);
+		        calculate();
 		},
 		
 		// called when some value has been modified: we try to paste multiple values
@@ -61,4 +63,3 @@ function loadXML()
 
 // start when window is loaded
 window.onload = loadXML;
-
