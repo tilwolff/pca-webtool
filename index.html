@@ -56,28 +56,31 @@
                                                 <img alt="PCA Webtool" src="...">
                                         </a>
                                 </div>
+                                <p class="navbar-text">Create smart interest rate scenarios</p>
+                                <div class="navbar-right" style="margin-right: 10px">
+                                
+                                        <div class="btn-group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        Load & Import <span class="caret"></span>
+                                                </button>
+                                                  <ul class="dropdown-menu">
+                                                        <li><a href="#" onclick="import_file()">Load *.csv file</a></li>
+                                                        <li><a href="#" onclick="import_data('yc_data.csv')">Load ECB historic EUR yield curves</a></li>
+                                                        <li><a href="#" onclick="load_random(500)">Load 50-day random test yield curves</a></li>
+                                                  </ul>
+                                        </div>
+                                        <button type="button" class="btn btn-danger navbar-btn" onclick="calculate()">Calculate</button>
+                                        <button type="button" class="btn btn-success navbar-btn" onclick="export()">Export</button>
+                                </div>
                         </div>
                 </nav>
+
         
 
                 <div class="container">
                         <div class="row">
-                                <div class="col-lg-4">
-                                        <div class="panel panel-default">
-                                                <div class="panel-heading">Controls</div>
-                                                <div class="panel-body">
-                                                        <div class="list-group">
-                                                                <button type="button" class="list-group-item" onclick="import_file()">Load *.csv</button>
-                                                                <button type="button" class="list-group-item" onclick="import_data('yc_data.csv')">Load ECB Historic EUR Yield Curves</button>
-                                                                <button type="button" class="list-group-item" onclick="load_random(500)">Load Random Test Data</button>
-                                                                <button type="button" class="list-group-item list-group-item-danger" onclick="calculate()">Calculate</button>
-                                                                <!--<button type="button" class="btn btn-success" onclick="export()">Export Results</button>-->
-                                                        </div>
-                                                </div>
-                                        </div>
-                                
-                                </div>
-                                <div class="col-lg-8">
+
+                                <div class="col-lg-12">
                                         <div id="chart_pca" style="width:100%; height:400px;">
                                         </div>
                                 </div>
