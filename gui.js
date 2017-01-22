@@ -11,9 +11,22 @@ function import_data(fil){
                         metadata.push(tmp);
                 }
                 
+                var n=metadata.length;
                 results.data.shift();
                 data=[];
-                while (results.data.length>0) data.push({values: results.data.shift()})
+                var valid=true;
+                while (results.data.length>0){
+                        valid=true;
+                        if (n!=results.data[0].length) valid=false;
+                        for (j=1;j<n;j++){
+                                if (typeof(results.data[0][j]) != "number") valid=false;
+                        }
+                        if (valid){
+                                data.push({values: results.data.shift()});
+                        }else{
+                                results.data.shift();
+                        }
+                }
                 eg_data.load({data: data,metadata:metadata});
                 eg_data.renderGrid("tablecontent_data", "table table-hover");
         }
@@ -95,7 +108,14 @@ function get_input_data(){
         result.headers=[];
         
         var num_rows=eg_data.getRowCount();
-        // if (num_rows>200) num_rows=200; // limit data for testing
+        if (num_rows>1000) {
+
+                if (confirm('Your data contains more than 1000 rows, which may take a long time to calculate and may even make the calculation fail. Press OK to limit time series to 1000 observations, or press Cancel to continue.')) {
+                        num_rows=1000;
+                        
+                }
+        }
+                
         for (i=0;i<num_rows;i++){
                 row=[]; row_diff=[];
                 for (j=1;j<eg_data.getColumnCount();j++){

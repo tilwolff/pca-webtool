@@ -1,12 +1,7 @@
 var perform_pca=function(val){
         var result=val;
+
         var val_val_t=numeric.dot(val.differences,numeric.transpose(val.differences));
-        for (i=0;i<val_val_t.length;i++){
-                for (j=i;j<val_val_t[i].length;j++){
-                        if(!val_val_t[i][j]) alert("row "+i+" col "+ j);
-                }
-        }
-                
         var eig=eigen_jk(val_val_t);
         var E_t=numeric.transpose(eig.E);
         
