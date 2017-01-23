@@ -130,14 +130,19 @@ function get_input_data(){
         return result;
 }
 
+//
+// Displays first 10 principal components
+//
 function display_results(val){
 
         var i,data,metadata,tmp;
+        var n=val.component_vectors[0].length;
+        if (n>10) n=10;
         
         //principal components
         data=[];
         for (i=0;i<val.component_vectors.length;i++){
-                tmp=val.component_vectors[i].slice(0,10);
+                tmp=val.component_vectors[i].slice(0,n);
                 tmp.unshift(val.times[i]);
                 data.push({values: tmp});
         }
@@ -145,20 +150,40 @@ function display_results(val){
         eg_pc.renderGrid("tablecontent_pc", "table table-hover");
         
         //loadings
-        metadata=[ {name:'expl', label:'Expl. Power', datatype:'double(%,2)', editable:'false'} ];
+        metadata=[ {name:'desc', label:'Description', datatype:'string', editable:'false'},
+                   {name:'expl', label:'Expl. Power', datatype:'double(%,2)', editable:'false'} ];
         
         for (i=0;i<val.headers.length;i++){
                 tmp={name:val.headers[i], label:val.headers[i], datatype:'double(%,4)', editable:'true'}
                 metadata.push(tmp);
         }
         data=[];
-        for (i=0;i<10;i++){
+        for (i=0;i<n;i++){
                 tmp=val.loadings[i].slice();
                 tmp.unshift(val.rel_variances[i]*100);
+                tmp.unshift("Comp " + (i+1));
                 data.push({values: tmp});
         } 
-        eg_loadings.load({data: data,metadata:metadata});
+        eg_loadings.load({data: data, metadata:metadata});
         eg_loadings.renderGrid("tablecontent_loadings", "table table-hover");
+        
+        //scenarios
+        metadata=[ {name:'desc', label:'Description', datatype:'string', editable:'false'} ];
+        
+        for (i=0;i<val.headers.length;i++){
+                tmp={name:val.headers[i], label:val.headers[i], datatype:'double(%,4)', editable:'true'}
+                metadata.push(tmp);
+        }
+        data=[];
+        var lab;
+        for (i=0;i<val.scenarios.length;i++){
+                tmp=val.scenarios[i].slice();
+                lab=((i % 2) != 0) ?  "Comp " + ((i+1)/2) + " down" : "Comp " + (i/2+1) + " up"
+                tmp.unshift(lab);
+                data.push({values: tmp});
+        } 
+        eg_scenarios.load({data: data,metadata:metadata});
+        eg_scenarios.renderGrid("tablecontent_scenarios", "table table-hover");
 
 
         update_chart(val);

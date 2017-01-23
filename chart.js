@@ -32,7 +32,7 @@ AmCharts.ready(function () {
 
         // first
         var graph1 = new AmCharts.AmGraph();
-        graph1.title='first component';
+        graph1.title='first component up';
         graph1.lineColor = "#444444";
         graph1.balloonText = "x:[[x]] y:[[y]]";
         graph1.xField = "index";
@@ -43,7 +43,7 @@ AmCharts.ready(function () {
 
         // second
         var graph2 = new AmCharts.AmGraph();
-        graph2.title='second component';
+        graph2.title='second component up';
         graph2.lineColor = "#888888";
         graph2.balloonText = "x:[[x]] y:[[y]]";
         graph2.xField = "index";
@@ -55,7 +55,7 @@ AmCharts.ready(function () {
         
         // third
         var graph3 = new AmCharts.AmGraph();
-        graph3.title='third component';
+        graph3.title='third component up';
         graph3.lineColor = "#cccccc";
         graph3.balloonText = "x:[[x]] y:[[y]]";
         graph3.xField = "index";
@@ -92,7 +92,7 @@ function update_chart(val){
         chart_data=[];        
         var tmp;
         for (i=0;i<val.headers.length;i++){
-                tmp={index:i, first:val.loadings[0][i],second:val.loadings[1][i],third:val.loadings[2][i]}
+                tmp={index:i, first:val.scenarios[0][i],second:val.scenarios[2][i],third:val.scenarios[4][i]}
                 chart_data.push(tmp);
         }
         

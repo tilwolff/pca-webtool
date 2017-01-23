@@ -13,6 +13,30 @@ var perform_pca=function(val){
         var_total=numeric.sum(eig.lambda);
         result.rel_variances=numeric.div(eig.lambda,var_total);
         result.component_vectors=eig.E;
+        
+
+        //make a maximum of six scenarios (first 3 components up and down)
+        result.scenarios=[];
+        var i,j,quant_up,quant_down,avg_comp,avg_load;
+        var vec=new Array(result.component_vectors.length);
+        for (j=0;j<3 && j<result.component_vectors[0].length;j++){
+                for (i=0;i<vec.length;i++){
+                        vec[i]=result.component_vectors[i][j];
+                }
+                avg_comp=mean(vec);
+                avg_load=mean(result.loadings[j]);
+                
+                if(avg_load>0){
+                        quant_up=quantile(vec,0.95)-avg_comp;
+                        quant_down=quantile(vec,0.05)-avg_comp;
+                }else{
+                        quant_down=quantile(vec,0.95)-avg_comp;
+                        quant_up=quantile(vec,0.05)-avg_comp;
+                }        
+                
+                result.scenarios.push(numeric.mul(quant_up*Math.sqrt(252),result.loadings[j]));
+                result.scenarios.push(numeric.mul(quant_down*Math.sqrt(252),result.loadings[j]));
+        }
         return result;
 }
 
@@ -108,4 +132,27 @@ var eigen_jk=function(A) {
 
         return {E:Ematrix, lambda:lambda};
 };
+
+
+//computes quantile. warning - changes input array!!!
+var quantile=function(vec,q){
+        vec.sort(function(a,b){return a>b;});
+        if (q>1) q=1;
+        if (q<0) q=0;
+        var n=vec.length;
+        var i=Math.floor((n - 1)*q);
+        var delta=(n-1)*q - i;
+        return (1 - delta)*vec[i] + delta*vec[i+1];
+}
+
+//computes mean
+var mean=function(vec){
+        var n=vec.length;
+        var i,sum=0;
+        for (i=0;i<n;i++){
+                sum+=vec[i];
+        }
+        return sum/n;
+}
+
 

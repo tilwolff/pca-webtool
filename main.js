@@ -35,10 +35,20 @@ function loadXML()
 		// called when some value has been modified: we try to paste multiple values
 		//modelChanged: function(rowIdx, colIdx, oldValue, newValue, row) {tryPaste(this,newValue,rowIdx,colIdx);}
 	});
+        
+	eg_scenarios = new EditableGrid("scenarios", {
+		
+		// called when the XML has been fully loaded 
+		tableLoaded: function() {
 
-	// load XML file
-	eg_loadings.loadXML("grid_loadings.xml");
-	
+			// render the grid
+			this.renderGrid("tablecontent_scenarios", "table table-hover"); 
+		},
+		
+		// called when some value has been modified: we try to paste multiple values
+		//modelChanged: function(rowIdx, colIdx, oldValue, newValue, row) {tryPaste(this,newValue,rowIdx,colIdx);}
+	});
+        	
 	
 	eg_data = new EditableGrid("data", {
 		
