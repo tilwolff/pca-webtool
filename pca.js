@@ -1,30 +1,33 @@
 var perform_pca=function(val){
-        var result=val;
+        var result=val;     
 
-        var val_val_t=numeric.dot(val.differences,numeric.transpose(val.differences));
-        var eig=eigen_jk(val_val_t);
-        var E_t=numeric.transpose(eig.E);
+        // singular value decomposition
+        // matrix M=USV*
+        var s=numeric.svd(val.differences);
+        var s_diag=numeric.diag(s.S);
+        var V_transp=numeric.transpose(s.V);
         
-        var E_t_E=numeric.dot(E_t,eig.E);
-        var E_t_E_inv=numeric.inv(E_t_E);
-        var pseudoinverse=numeric.dot(E_t_E_inv,E_t);
-        result.loadings=numeric.dot(pseudoinverse,val.differences);
-        result.variances=eig.lambda;
-        var_total=numeric.sum(eig.lambda);
-        result.rel_variances=numeric.div(eig.lambda,var_total);
-        result.component_vectors=eig.E;
+        // loadings are given by  SV*...
+        result.loadings=numeric.dot(s_diag,V_transp);        
         
-
+        // variances are the squares of the diagonal of S...
+        result.variances=numeric.mul(s.S,s.S);
+        var var_total=numeric.sum(result.variances);
+        result.rel_variances=numeric.div(result.variances,var_total);
+        
+        // and U gives you the uncorrelated principal component vectors...
+        result.component_vectors=s.U;
+        
         //make a maximum of six scenarios (first 3 components up and down)
         result.scenarios=[];
-        var i,j,quant_up,quant_down,avg_comp,avg_load;
+        var quant_up,quant_down,avg_comp,avg_load;
         var vec=new Array(result.component_vectors.length);
         for (j=0;j<3 && j<result.component_vectors[0].length;j++){
                 for (i=0;i<vec.length;i++){
                         vec[i]=result.component_vectors[i][j];
                 }
-                avg_comp=mean(vec);
-                avg_load=mean(result.loadings[j]);
+                avg_comp=numeric.sum(vec)/vec.length;
+                avg_load=numeric.sum(result.loadings[j])/result.loadings[j].length;
                 
                 if(avg_load>0){
                         quant_up=quantile(vec,0.95)-avg_comp;
@@ -143,16 +146,6 @@ var quantile=function(vec,q){
         var i=Math.floor((n - 1)*q);
         var delta=(n-1)*q - i;
         return (1 - delta)*vec[i] + delta*vec[i+1];
-}
-
-//computes mean
-var mean=function(vec){
-        var n=vec.length;
-        var i,sum=0;
-        for (i=0;i<n;i++){
-                sum+=vec[i];
-        }
-        return sum/n;
 }
 
 

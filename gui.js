@@ -75,13 +75,18 @@ function load_random(num_rows){
         var data=[];
         tmp_old=[0,0,0,0,0,0,0,0,0,0];
         for (i=0;i<num_rows;i++){
-                for (j=0;j<10;j++) noise.push((Math.random()-0.5)*0.1);
+                //create random first component
                 cmp=numeric.mul((Math.random()-0.5)*0.4,first_comp);
                 tmp=numeric.add(tmp_old,cmp);
+                //add random second component
                 cmp=numeric.mul((Math.random()-0.5)*0.3,second_comp);
                 tmp=numeric.add(tmp,cmp);
+                //add random third component
                 cmp=numeric.mul((Math.random()-0.5)*0.2,third_comp);
                 tmp=numeric.add(tmp,cmp);
+                //add some minor random noise
+                for (j=0;j<10;j++) noise.push((Math.random()-0.5)*0.01);
+                tmp=numeric.add(tmp,noise);
                 tmp_old=tmp.slice();
                 tmp.unshift('Day '+i);
                 data.push({values:tmp});
@@ -108,10 +113,10 @@ function get_input_data(){
         result.headers=[];
         
         var num_rows=eg_data.getRowCount();
-        if (num_rows>1000) {
+        if (num_rows>5000) {
 
-                if (confirm('Your data contains more than 1000 rows, which may take a long time to calculate and may even make the calculation fail. Press OK to limit time series to 1000 observations, or press Cancel to continue.')) {
-                        num_rows=1000;
+                if (confirm('Your data contains more than 5000 rows, which may take a long time to calculate and may even make the calculation fail. Press OK to limit time series to 5000 observations, or press Cancel to continue.')) {
+                        num_rows=5000;
                         
                 }
         }
