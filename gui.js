@@ -1,3 +1,6 @@
+//need global object of scenarios for export functionality
+var g_scenarios=null;
+
 function import_data(fil){
 
         var callb=function(results,file){
@@ -137,6 +140,7 @@ function get_input_data(){
 
 //
 // Displays first 10 principal components
+// Displays the interest rate scenarios and makes them available for download
 //
 function display_results(val){
 
@@ -173,24 +177,64 @@ function display_results(val){
         eg_loadings.renderGrid("tablecontent_loadings", "table table-hover");
         
         //scenarios
+        //data for editable grid
         metadata=[ {name:'desc', label:'Description', datatype:'string', editable:'false'} ];
+        
+        //data for papa parse (export functionality)
+        fields=[ "Description" ];
+        var export_data=[];
         
         for (i=0;i<val.headers.length;i++){
                 tmp={name:val.headers[i], label:val.headers[i], datatype:'double(%,4)', editable:'true'}
                 metadata.push(tmp);
+                fields.push(val.headers[i]);
         }
         data=[];
+
         var lab;
         for (i=0;i<val.scenarios.length;i++){
                 tmp=val.scenarios[i].slice();
                 lab=((i % 2) != 0) ?  "Comp " + ((i+1)/2) + " down" : "Comp " + (i/2+1) + " up"
                 tmp.unshift(lab);
                 data.push({values: tmp});
+                export_data.push(tmp);
         } 
         eg_scenarios.load({data: data,metadata:metadata});
         eg_scenarios.renderGrid("tablecontent_scenarios", "table table-hover");
 
+        // make data available for export function, Papa.unparse needs object with entries "data" and "fields"
+        g_scenarios= {data: export_data,fields:fields};
 
         update_chart(val);
+}
+
+function export_scenarios(){
+        if (null==g_scenarios){
+                msgbox("nothing to export.");
+                return null;
+        }
+        
+        // config
+        var conf={
+                quotes: false,
+                quoteChar: '"',
+                delimiter: ";",
+                header: true,
+                newline: "\r\n"
+        }
+        
+        var export_data=Papa.unparse(g_scenarios,conf);
+        
+        var export_data = 'data:text/csv;charset=utf-8,'+encodeURIComponent(export_data);
+        var a = document.createElement('a');
+        a.href = export_data;
+        
+        var today=new Date();
+	a.download="pca_web_app_scen_"+today.toString()+".csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        return null;
 }
 
