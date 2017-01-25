@@ -230,7 +230,7 @@ function export_scenarios(){
         a.href = export_data;
         
         var today=new Date();
-	a.download="pca_web_app_scen_"+today.toString()+".csv";
+        a.download="pca_web_app_scen_"+today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()+"_"+today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds()+"_"+today.getMilliseconds()+".csv";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
