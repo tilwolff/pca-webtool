@@ -45,7 +45,7 @@ var perform_pca=function(val){
 
 //computes quantile. warning - sorts and thus changes input array!!!
 var quantile=function(vec,q){
-        vec.sort(function(a,b){return a>b;});
+        vec.sort(function(a,b){return a-b;});
         if (q>1) q=1;
         if (q<0) q=0;
         var n=vec.length;
